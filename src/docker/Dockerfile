@@ -95,8 +95,10 @@ RUN mkdir jsl && \
 # Java
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 E1DF1F24 3DD9F856
 RUN apt-get update
-RUN apt-get install -y openjdk-8-jdk ca-certificates maven
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+# see https://askubuntu.com/questions/769467/can-not-install-openjdk-9-jdk-because-it-tries-to-overwrite-file-aready-includ
+# for why we need to use --force-overwrite here
+RUN apt-get -o Dpkg::Options::="--force-overwrite" -yq install openjdk-9-jdk ca-certificates maven
+ENV JAVA_HOME /usr/lib/jvm/java-9-openjdk-amd64
 
 # LaTeX
 RUN apt-get install -y texlive-latex-base texlive-fonts-recommended texlive-latex-extra xzdec
